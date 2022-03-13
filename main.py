@@ -3,6 +3,28 @@ from pytube import *
 import os
 import sys
 
+#
+# Copyright 2021 © GG
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy of 
+# this software and associated documentation files (the “Software”), to deal 
+# in the Software without restriction, including without limitation the rights to 
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+# of the Software, and to permit persons to whom the Software is furnished to do 
+# so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all 
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+# SOFTWARE.
+# 
+
 # auth
 client = Client()
 
@@ -34,7 +56,7 @@ async def on_message(message):
         await message.channel.send(help_content)
 
     elif message.content.startswith("$license"):
-        await message.channel.send(content="GNU General Public License, third version.", file=File("LICENSE"))
+        await message.channel.send(content="MIT (Massachusetts Institute of Technology) License.", file=File("LICENSE"))
 
     elif message.content.startswith("$source"):
         await message.channel.send("If you have git installed, you can do 'git clone https://github.com/weebcyberpunk/mio' to download the source code.\nIf not, go to that url, click on 'Code' green button and 'Download ZIP'. Unzip the downloaded file to any location.")
@@ -74,8 +96,11 @@ Learn more: https://questioncopyright.org/
         # downloading and sending
         for link in links:
 
-            # this is ugly but it's the only way to do it
-            await message.channel.send(file=File(YouTube(link).streams.filter(only_audio=True).first().download("music-database")))
+            video = YouTube(link)
+            if 
+
+                # this is ugly but it's the only way to do it
+                await message.channel.send(file=File(video.streams.filter(only_audio=True).first().download("music-database")))
 
         await message.channel.send("Finish <3")
 
