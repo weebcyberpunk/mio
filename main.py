@@ -1,5 +1,5 @@
 from discord import *
-from youtube_dl import *
+from yt_dlp import *
 
 #
 # If you gonna run this, please note that this shit uses the PWD to store all
@@ -31,7 +31,7 @@ from youtube_dl import *
 # }}}
 
 client = Client()
-youtubedl = YoutubeDL()
+youtubedl = YoutubeDL({ "ignoreerrors": True, "postprocessors": [{"FFmpegExtractAudioPP"}] })
 
 # login in
 with open("auth.txt", "r") as auth_file:
@@ -50,5 +50,15 @@ async def on_message(message):
 
     if message.content.startswith("$download"):
 
+        msg_content = message.content.split(' ')
+        msg_content.pop(0)
+
+        for url in msg_content:
+            video_info = youtubedl.extract_info(url)
+
+            with open(f"{video_info['title']}.mp3", "rb") as video_file:
+                await message.channel.send(file=File(video_file))
+
 
 client.run(AUTH)
+
