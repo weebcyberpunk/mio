@@ -1,5 +1,5 @@
-from discord import *
-from yt_dlp import *
+import discord 
+import yt_dlp 
 
 #
 # If you gonna run this, please note that this shit uses the PWD to store all
@@ -30,8 +30,9 @@ from yt_dlp import *
 # 
 # }}}
 
-client = Client()
-youtubedl = YoutubeDL({ "ignoreerrors": True, "postprocessors": [{"FFmpegExtractAudioPP"}] })
+client = discord.Client()
+# { "ignoreerrors": True, "postprocessors": [{"FFmpegExtractAudioPP"}] }
+youtubedl = yt_dlp.YoutubeDL()
 
 # login in
 with open("auth.txt", "r") as auth_file:
@@ -40,7 +41,7 @@ with open("auth.txt", "r") as auth_file:
 
 @client.event
 async def on_ready():
-    print(f"logged in as {client.user.name}")
+    print(f"logged in as {client.user}")
 
 
 @client.event
@@ -57,7 +58,7 @@ async def on_message(message):
             video_info = youtubedl.extract_info(url)
 
             with open(f"{video_info['title']}.mp3", "rb") as video_file:
-                await message.channel.send(file=File(video_file))
+                await message.channel.send(file=discord.File(video_file))
 
 
 client.run(AUTH)
