@@ -32,7 +32,13 @@ import yt_dlp
 
 client = discord.Client()
 # { "ignoreerrors": True, "postprocessors": [{"FFmpegExtractAudioPP"}] }
-youtubedl = yt_dlp.YoutubeDL()
+youtubedl = yt_dlp.YoutubeDL({
+    'format': 'bestaudio/best',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+    }]
+})
 
 # login in
 with open("auth.txt", "r") as auth_file:
@@ -57,7 +63,7 @@ async def on_message(message):
         for url in msg_content:
             video_info = youtubedl.extract_info(url)
 
-            with open(f"{video_info['title']}.mp3", "rb") as video_file:
+            with open(f"{video_info['title']} [{video_info['id']}].mp3", "rb") as video_file:
                 await message.channel.send(file=discord.File(video_file))
 
 
