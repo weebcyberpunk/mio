@@ -1,5 +1,6 @@
 import discord 
 import yt_dlp 
+import os
 
 #
 # If you gonna run this, please note that this shit uses the PWD to store all
@@ -31,7 +32,6 @@ import yt_dlp
 # }}}
 
 client = discord.Client()
-# { "ignoreerrors": True, "postprocessors": [{"FFmpegExtractAudioPP"}] }
 youtubedl = yt_dlp.YoutubeDL({
     'format': 'bestaudio/best',
     'postprocessors': [{
@@ -55,16 +55,48 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith("$download"):
+    elif message.content.startswith('$'):
 
-        msg_content = message.content.split(' ')
-        msg_content.pop(0)
+        if message.content.startswith("$download"):
 
-        for url in msg_content:
-            video_info = youtubedl.extract_info(url)
+            msg_content = message.content.split(' ')
+            msg_content.pop(0)
+            msg_content.remove('')
 
-            with open(f"{video_info['title']} [{video_info['id']}].mp3", "rb") as video_file:
-                await message.channel.send(file=discord.File(video_file))
+            # loop through urls
+            for url in msg_content:
+                # continue if url is not valid
+                try:
+                    video_info = youtubedl.extract_info(url, download=False)
+
+                except yt_dlp.utils.ExtractorError:
+                    await message.channel.send(f'{url} is not a valid link!')
+                    continue
+
+                else:
+                    file_name = f"{video_info['title']} [{video_info['id']}].mp3"
+
+                # if file exists, just sends. if not, downloads
+                if not os.path.exists(file_name):
+                    await message.channel.send('Downloading music, please wait... <3')
+                    youtubedl.download(url)
+
+                else:
+                    await message.channel.send('Found music in database! Sending quickly... ;)')
+
+                try: 
+                    video_file = open(file_name, "rb")
+
+                except OSError:
+                    await message.channel.send("Cannot download this music, sorry ;(")
+
+                else:
+                    await message.channel.send(file=discord.File(video_file))
+                    video_file.close()
+
+
+        elif message.content.startswith('$ping'):
+            await message.channel.send('Mio is listening! UwU <3')
 
 
 client.run(AUTH)
