@@ -40,11 +40,6 @@ youtubedl = yt_dlp.YoutubeDL({
     }]
 })
 
-# login in
-with open("auth.txt", "r") as auth_file:
-    AUTH = auth_file.read()
-
-
 @client.event
 async def on_ready():
     print(f"logged in as {client.user}")
@@ -99,5 +94,5 @@ async def on_message(message):
             await message.channel.send('Mio is listening! UwU <3')
 
 
-client.run(AUTH)
+client.run(os.getenv('DISCORD_TOKEN'))
 
