@@ -56,7 +56,11 @@ async def on_message(message):
 
             msg_content = message.content.split(' ')
             msg_content.pop(0)
-            msg_content.remove('')
+
+            # corrects strange behaviour of msg_content to eventually have empty
+            # strings because that breaks the youtube download
+            if '' in msg_content:
+                msg_content.remove('')
 
             # loop through urls
             for url in msg_content:

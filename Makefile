@@ -1,2 +1,2 @@
-run : main.py
-	python main.py
+localrun : localrun.sh main.py
+	sh localrun.sh
