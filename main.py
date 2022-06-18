@@ -9,6 +9,9 @@ import os
 # Repo should includes Procfile to run on Heroku. Makefile should define a
 # localrun.sh script to run locally with your token
 #
+# Of course, requires discord binds, yt_dlp and ffmpeg (most GNU/Linux packages
+# for theese two will work)
+#
 
 # LICENSE {{{
 #
