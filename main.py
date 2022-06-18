@@ -6,6 +6,9 @@ import os
 # If you gonna run this, please note that this shit uses the PWD to store all
 # downloaded videos. Good luck.
 #
+# Repo should includes Procfile to run on Heroku. Makefile should define a
+# localrun.sh script to run locally with your token
+#
 
 # LICENSE {{{
 #
