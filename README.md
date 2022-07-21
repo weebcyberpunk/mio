@@ -19,8 +19,3 @@ required. See `requirements.txt`.
 
 The `Makefile` defines a target to run Mio locally via a script called
 `localrun.sh`, which you're supposed to create with your token.
-
-## Adding to server
-
-I'm currently running an instance of Mio. You can add it to your server with
-[this link](https://discord.com/api/oauth2/authorize?client_id=938200205638135808&permissions=3398656&scope=bot)
